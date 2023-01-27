@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text">
+    <script>
+        // function fn(){
+        //     try{
+        //         console.log(a)
+        //         let a = 1
+        //     } catch(err){
+        //         // console.log(err)
+        //         throw new Error('代码有问题呀')
+        //     }
+        //     finally{
+        //         console.log(333)
+        //     }
+        // }
+        // fn()
+
+        const input = document.querySelector('input')
+        function foo(x, y) {
+            console.log(x + y)
+            console.log(this)
+        }
+
+        // const obj = {
+        //     name: 'test',
+        //     fn: function () {
+        //         console.log(this, '---定时器外层的this') // obj
+        //         setTimeout(function () {
+        //             // console.log(this, 'function')  // window
+        //             // 在定时器的回调函数中，又调用了一个函数
+        //             // foo调用执行的时候，它里面的this和定时器是不是箭头函数没有关系
+        //             foo()
+        //         }, 1000);
+        //         setTimeout(() => {
+        //             // console.log(this, '箭头函数')  // obj
+        //             foo()
+        //         }, 2000)
+        //     }
+        // }
+        const debounce = (fn,msg)=>{
+            let timeId = null
+            return function(...args){
+                if (timeId) clearTimeout(timeId)
+                timeId = setTimeout(() => {
+                    fn.apply(this, args)
+                }, msg)
+            }
+        }
+        // obj.fn()
+        input.addEventListener('keyup', debounce(foo, 500).bind(input, 2, 8))
+    </script>
+</body>
+
+</html>

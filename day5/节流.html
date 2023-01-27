@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            .box {
+                width: 500px;
+                height: 500px;
+                background-color: #ccc;
+                color: #fff;
+                text-align: center;
+                font-size: 100px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div class="box"></div>
+        <script>
+            const box = document.querySelector('.box')
+            let i = 1
+            const move = () => {
+                // 只要鼠标一移动，i就会变化
+                box.innerHTML = i++
+            }
+            // box.addEventListener('mousemove', move)
+
+
+
+            // 节流：throttle
+            // 持续的触发事件，在一段时间内，只允许函数执行一次
+            // ==> 节流：减少一段时间内，事件的触发频率
+
+            // 应用场景：
+            // 1. 浏览器窗口缩放 ，resize事件
+            // 2. scroll滚动事件 / mousemove 事件等。
+
+            // 需求： 每隔100ms只执行一次。
+            const throttle = (fn, ms = 0) => {
+                // let timeId
+                let pre = 0
+                return function () {
+                    // if(!timeId){
+                    //     tiemId = setTimeout(() => {
+                    //         fn.apply(this,arguments)
+                    //         timeId = null
+                    //     }, ms);
+                    // }
+                    let now = +new Date()
+                    if(now - pre >= ms){
+                        fn.apply(this,arguments)
+                        pre = Date.now()
+                    }
+                }
+            }
+            box.addEventListener('mousemove', throttle(move, 100))
+
+
+        </script>
+    </body>
+    
+    </html>
+</body>
+</html>
